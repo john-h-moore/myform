@@ -1,0 +1,44 @@
+<?php
+/**
+* Implements hook_help()
+*/
+function myform_help($path, $arg){
+	switch($path){
+		case 'admin/help#myform':
+			return '<p>' . t('Learning about the Form API') . '</p>';
+			break;
+	}
+}
+
+/**
+* Implements hook_menu()
+*/
+function myform_menu(){
+	$items['input/myform'] = array(
+		'title' => 'My Form',
+		'description' => 'Learning about the Form API',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('myform_form'),
+		'access callback' => TRUE,
+		);
+	return $items;
+}
+
+/**
+* A simple form
+*/
+function myform_form($form, &$form_submit){
+	$form['color'] = array(
+		'#title' => t('Favorite color'),
+		// '#type' => 'textfield',
+		'#type' => 'checkboxes',
+		'#options' => drupal_map_assoc(array('red', 'blue', 'green')),
+		'#required' => TRUE,
+		'#description' => t('What is your favorite color?'),
+		);
+	$form['submit'] = array(
+		'#type' => 'submit',
+		'#value' => 'Submit',
+		);
+	return $form;
+}
